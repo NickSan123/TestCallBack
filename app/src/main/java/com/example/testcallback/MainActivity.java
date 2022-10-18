@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     TextView tvPing;
     ProgressBar pb;
+    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         Button btOk = (Button) findViewById(R.id.btOk);
         tvPing = (TextView) findViewById(R.id.tvPing);
         pb = (ProgressBar) findViewById(R.id.progressBar);
+        editText = (EditText) findViewById(R.id.editTextTextPersonName);
 
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 pb.setMax(ping.getQtdPacage());
-                ping.setIpAddress("velocidade.online.net.br");
+                ping.setIpAddress(editText.getText().toString());
                 ping.start();
             }
         });

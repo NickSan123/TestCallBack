@@ -72,7 +72,7 @@ public class Ping extends Thread{
                 }
                 inputLine = bufferedReader.readLine();
                 try {
-                    if (inputLine.length() > 0 && inputLine.contains("time="))
+                    if (inputLine != null && inputLine.length() > 0 && inputLine.contains("time="))
                         //Log.v("PING", inputLine.substring(inputLine.lastIndexOf("time=")).replace("time=","").replace(" ms",""));
                         ping = Double.parseDouble(inputLine.substring(inputLine.lastIndexOf("time=")).replace("time=","").replace(" ms","").replace("(DUP!)","").trim());
                     if (inputLine.length() > 0 && inputLine.contains("icmp_seq")) {
@@ -82,20 +82,22 @@ public class Ping extends Thread{
                         progress = Integer.parseInt( array[0].replace("icmp_seq=",""));
                         Log.v("PING", array[0].replace("icmp_seq=",""));
                     }
-                }catch (Exception e){this.stop(); pingCallBack.onErro(e.getMessage()); e.printStackTrace();}
+                }catch (Exception e){e.printStackTrace();}
                 pingCallBack.onPingResult(ping, progress);
 
-                if (inputLine.length() > 0 && inputLine.contains("packets")) {  // when we get to the last line of executed ping command
-                    String array[] = {};
-                    array = inputLine.split(",");
-                    loss = Double.parseDouble(array[array.length - 2].replace(" ","").replace("%packetloss",""));
+                if (inputLine != null && inputLine.length() > 0 && inputLine.contains("packets")) {  // when we get to the last line of executed ping command
+                    try {
+                        String array[] = {};
+                        array = inputLine.split(",");
+                        loss = Double.parseDouble(array[array.length - 2].replace(" ", "").replace("%packetloss", ""));
 
-                    qtdeEnviado = Integer.parseInt(array[0].replace("packets transmitted", "").trim());
-                    qtdeRecebido = Integer.parseInt(array[1].replace("received", "").trim());
+                        qtdeEnviado = Integer.parseInt(array[0].replace("packets transmitted", "").trim());
+                        qtdeRecebido = Integer.parseInt(array[1].replace("received", "").trim());
 
-                    Log.v("PING", "Transmitidos: " + array[0].replace("packets transmitted", "").replace(" ","") +"Recebidos: " + array[1].replace("received","").replace(" ",""));
+                        Log.v("PING", "Transmitidos: " + array[0].replace("packets transmitted", "").replace(" ", "") + "Recebidos: " + array[1].replace("received", "").replace(" ", ""));
+                    }catch (Exception e){e.printStackTrace();}
                 }
-                Log.v("IMPUTE", inputLine);
+                Log.v("IMPUTE", inputLine != null ? inputLine : "null");
             }
             //Log.v("PING", min+"\n"+med+"\n"+max+"\n"+jitter);
         }
