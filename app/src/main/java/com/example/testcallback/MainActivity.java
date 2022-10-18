@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onErro(String erro) {
+                        Toast.makeText(getApplicationContext(),erro, Toast.LENGTH_LONG).show();
                     }
                 });
                 pb.setMax(ping.getQtdPacage());

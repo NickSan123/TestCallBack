@@ -13,6 +13,7 @@ public class Ping extends Thread{
     PingCallBack pingCallBack;
     String ipAddress;
 
+    double interval  = 0.3;
     int qtdPacage = 20;
 
     public String getIpAddress() {
@@ -23,6 +24,9 @@ public class Ping extends Thread{
         this.ipAddress = ipAddress;
     }
 
+    public void setInterval(double interval) {
+        this.interval = interval;
+    }
     public int getQtdPacage() {
         return qtdPacage;
     }
@@ -37,7 +41,7 @@ public class Ping extends Thread{
 
     @Override
     public void run() {
-        String pingCommand = "/system/bin/ping -c " + qtdPacage + " -i 0.2 " + ipAddress;
+        String pingCommand = "/system/bin/ping -c " + qtdPacage + " -i "+interval+" " + ipAddress;
         String inputLine = "";
 
         double ping = 0, max = 0, min = 0, med = 0, jitter = 0, loss = 0;
